@@ -13,6 +13,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/DeleteContact.API/DeleteContact.API.csproj", "src/DeleteContact.API/"]
+COPY ["src/DeleteContact.Application/DeleteContact.Application.csproj", "src/DeleteContact.Application/"]
+COPY ["src/DeleteContact.Domain/DeleteContact.Domain.csproj", "src/DeleteContact.Domain/"]
+COPY ["src/DeleteContact.Infrastructure/DeleteContact.Infrastructure.csproj", "src/DeleteContact.Infrastructure/"]
 RUN dotnet restore "./src/DeleteContact.API/DeleteContact.API.csproj"
 COPY . .
 WORKDIR "/src/src/DeleteContact.API"

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DeleteContact.Application.Contacts.Commands.Delete;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace DeleteContact.API.Controllers
@@ -14,15 +16,14 @@ namespace DeleteContact.API.Controllers
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        [HttpDelete]
-        [ProducesResponseType(Status204NoContent)]
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(typeof(DeleteContactCommandResponse), Status202Accepted)]
         [ProducesResponseType(Status400BadRequest)]
         [ProducesResponseType(Status404NotFound)]
-        public async Task<ActionResult<CreateContactCommandResponse>> DeleteContact(
-            [FromRoute] Guid id, CancellationToken cancellationToken)
+        public async Task<ActionResult<DeleteContactCommandResponse>> DeleteContact([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            await _dispatcher.Send(command, cancellationToken);
-            return NoContent();
+            var response = await _dispatcher.Send(new DeleteContactCommand(id), cancellationToken);
+            return Accepted(response);
         }
     }
 }
