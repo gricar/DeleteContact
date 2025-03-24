@@ -31,6 +31,7 @@ public class ErrorHandlerMiddleware
         var statusCode = ex switch
         {
             BadRequestException => HttpStatusCode.BadRequest,
+            ContactNotFoundException => HttpStatusCode.NotFound,
             ApplicationException => HttpStatusCode.BadRequest,
             _ => HttpStatusCode.InternalServerError,
         };
