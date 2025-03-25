@@ -4,7 +4,6 @@ using DeleteContact.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services
     .ConfigureApplicationServices(builder.Configuration)
     .ConfigurePersistenceServices(builder.Configuration);
